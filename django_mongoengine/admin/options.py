@@ -1,3 +1,5 @@
+from functools import update_wrapper
+
 from django import forms, template
 from django.forms.formsets import all_valid
 from django.forms.models import modelformset_factory
@@ -17,7 +19,6 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.utils.decorators import method_decorator
 from django.utils.datastructures import SortedDict
-from django.utils.functional import update_wrapper
 from django.utils.html import escape, escapejs
 from django.utils.safestring import mark_safe
 from django.utils.functional import curry
@@ -27,7 +28,7 @@ from django.utils.translation import ungettext
 from django.utils.encoding import force_unicode
 from django.forms.forms import pretty_name
 
-from django_mongoengine.fields import (DateTimeField, URLField, IntField,
+from mongoengine.fields import (DateTimeField, URLField, IntField,
                                        ListField, EmbeddedDocumentField,
                                        ReferenceField, StringField, FileField,
                                        ImageField)
@@ -391,7 +392,7 @@ class DocumentAdmin(BaseDocumentAdmin):
             self.inline_instances.append(inline_instance)
 
     def get_urls(self):
-        from django.conf.urls.defaults import patterns, url
+        from django.conf.urls import patterns, url
 
         def wrap(view):
             def wrapper(*args, **kwargs):
